@@ -1,11 +1,12 @@
 import React from 'react';
 import ShowCard from './ShowCard';
 import IMAGE_NOT_FOUND from '../../images/not-found.png';
+import { FlexGrid } from '../styled';
 
 const ShowGrid = ({ data }) => {
   //   console.log(data);   // in place of item we could have also used ({show}) and then key would be show.id only in line 8
   return (
-    <div>
+    <FlexGrid>
       {data.map(item => (
         <ShowCard
           key={item.show.id}
@@ -15,7 +16,7 @@ const ShowGrid = ({ data }) => {
           summary={item.show.summary}
         />
       ))}
-    </div>
+    </FlexGrid>
   );
 };
 
