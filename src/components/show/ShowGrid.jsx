@@ -10,7 +10,7 @@ const ShowGrid = ({ data }) => {
       {data.map(item => (
         <ShowCard
           key={item.show.id}
-          url={item.show.url}
+          id={item.show.id}
           name={item.show.name}
           image={item.show.image ? item.show.image.medium : IMAGE_NOT_FOUND}
           summary={item.show.summary}
