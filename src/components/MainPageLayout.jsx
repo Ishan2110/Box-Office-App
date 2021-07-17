@@ -3,7 +3,7 @@ import Navs from './Navs';
 import Title from './Title';
 
 const MainPageLayout = ({ children }) => {
-  console.log(children);
+  //   console.log(children);
   return (
     <div>
       <Title
