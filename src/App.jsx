@@ -1,19 +1,34 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import Navs from './components/Navs';
+import Home from './pages/Home';
+import Starred from './pages/Starred';
 
 function App() {
   return (
-    <Switch>
-      <Route exact path="/">
-        This is home page
-      </Route>
+    <div>
+      <Navs />
 
-      <Route exact path="/stds">
-        This is about
-      </Route>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
 
-      <Route>This is a 404 page</Route>
-    </Switch>
+        {/* <Route
+          path="/privacy-policy"     // to go to an external link if you go to a specific URL
+          component={() => {
+            window.location.href = 'https://www.youtube.com/';
+            return null;
+          }}
+        /> */}
+
+        <Route exact path="/starred">
+          <Starred />
+        </Route>
+
+        <Route>Error 404 Not Found</Route>
+      </Switch>
+    </div>
   );
 }
 
