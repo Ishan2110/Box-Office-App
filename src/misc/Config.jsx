@@ -5,5 +5,7 @@ export async function apiGET(queryString) {
     return resp.json();
   });
 
+  // throw new Error('Oops');
+
   return response;
 }
