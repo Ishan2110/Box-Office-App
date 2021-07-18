@@ -12,6 +12,7 @@ const ShowMainData = ({ name, rating, summary, tags, image }) => {
           <h1>{name}</h1>
           <div>
             <Star active />
+            {/* The prop is passed as true if we do not pass any argument like active above */}
             <span>{rating.average || 'N/A'}</span>
           </div>
         </Headline>

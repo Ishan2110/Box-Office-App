@@ -1,63 +1,19 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useReducer } from 'react';
+// This is basically the show page which will show the data when Read More is clicked
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import Cast from '../components/show/Cast';
 import Details from '../components/show/Details';
 import Seasons from '../components/show/Seasons';
 import ShowMainData from '../components/show/ShowMainData';
-import { apiGET } from '../misc/Config';
+import { useShow } from '../misc/Custom-hooks';
 import { InfoBlock, ShowPageWrapper } from './Show.Styled';
 
-const reducer = (prevState, action) => {
-  switch (action.type) {
-    case 'FETCH_SUCCESS':
-      return { isloading: false, error: null, show: action.show };
-
-    case 'FETCH_FAILED':
-      return { ...prevState, isloading: true, error: action.error };
-
-    default:
-      return prevState;
-  }
-};
-
-const initialState = {
-  show: null,
-  isloading: true,
-  error: null,
-};
-
 const Show = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // Gets the dynamic id when the page changes which can be processed further for
+  // updates regarding read more and other things
 
-  const [{ show, isloading, error }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
-
-  useEffect(() => {
-    // for useEffect cleanup,so that we dont get error when we change page and data is being loaded on DOM.
-    let isMounted = true;
-
-    apiGET(`shows/${id}?embed[]=seasons&embed[]=cast`)
-      .then(results => {
-        if (isMounted) {
-          dispatch({ type: 'FETCH_SUCCESS', show: results });
-        }
-      })
-      .catch(err => {
-        if (isMounted) {
-          dispatch({ type: 'FETCH_FAILED', error: err.message });
-        }
-      });
-
-    // useEffect Cleanup
-    return () => {
-      isMounted = false;
-    };
-  }, [id]);
-
-  console.log('show', show);
+  const { show, isloading, error } = useShow(id);
 
   if (isloading) {
     return <div>Data is being loaded</div>;

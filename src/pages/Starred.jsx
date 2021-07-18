@@ -14,7 +14,7 @@ const Starred = () => {
   useEffect(() => {
     if (starred && starred.length > 0) {
       // We could have used a for loop for multiple fetch requests but instead we use Promise.all to do all processing concurrently.
-      const promises = starred.map(showId => apiGET(`shows/${showId}`));
+      const promises = starred.map(showId => apiGET(`/shows/${showId}`));
 
       Promise.all(promises)
         .then(apiData => apiData.map(show => ({ show })))

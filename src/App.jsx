@@ -21,6 +21,7 @@ function App() {
 
       <Route exact path="/show/:id">
         <Show />
+        {/* Will redirect to show.jsx which will show all contents when Read More is clicked */}
       </Route>
 
       <Route exact path="/starred">
