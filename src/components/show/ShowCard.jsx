@@ -21,7 +21,8 @@ const ShowCard = ({ id, image, name, summary, onStarClick, isStarred }) => {
       <div className="btns">
         <Link to={`/show/${id}`}>Read more</Link>
         <button type="button" onClick={onStarClick}>
-          <Star active={isStarred} />
+          <Star active={isStarred} />{' '}
+          {/* This is Dynamic Styling using Star,check in styled.jsx */}
         </button>
       </div>
     </StyledShowCard>
