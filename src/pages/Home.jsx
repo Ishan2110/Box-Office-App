@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import ActorGrid from '../components/actor/ActorGrid';
 import CustomRadio from '../components/CustomRadio';
 import MainPageLayout from '../components/MainPageLayout';
@@ -11,6 +11,22 @@ import {
   SearchInput,
 } from './Home.Styled';
 
+// The below func isn't a part of home component and won't be rendered again till results is passed as argument.
+const renderResults = results => {
+  if (results && results.length === 0) {
+    return <div>No Results</div>;
+  }
+  if (results && results.length > 0) {
+    return results[0].show ? (
+      <ShowGrid data={results} />
+    ) : (
+      <ActorGrid data={results} />
+    );
+  }
+
+  return null;
+};
+
 const Home = () => {
   const [input, setInput] = useLastQuery(); // for search bar
   const [results, setResults] = useState(null); // for resuts array from API
@@ -18,9 +34,12 @@ const Home = () => {
 
   const isShowsSearch = SearchOption === 'shows';
 
-  const onInputChange = event => {
-    setInput(event.target.value);
-  };
+  const onInputChange = useCallback(
+    event => {
+      setInput(event.target.value);
+    },
+    [setInput]
+  );
 
   const onSearch = () => {
     apiGET(`/search/${SearchOption}?q=${input}`).then(result => {
@@ -34,24 +53,11 @@ const Home = () => {
     }
   };
 
-  const renderResults = () => {
-    if (results && results.length === 0) {
-      return <div>No Results</div>;
-    }
-    if (results && results.length > 0) {
-      return results[0].show ? (
-        <ShowGrid data={results} />
-      ) : (
-        <ActorGrid data={results} />
-      );
-    }
-
-    return null;
-  };
-
-  const onRadioChange = ev => {
+  // We have used useCallback as Custom Radio in line 76 below passes OnRadioChange as props to CustomRadio
+  // but we can't use memo in CustomRadio as it's a function which is an object and memo doesn't work for objects.
+  const onRadioChange = useCallback(ev => {
     setSearchOption(ev.target.value);
-  };
+  }, []);
 
   //   console.log(SearchOption);
 
@@ -92,7 +98,7 @@ const Home = () => {
           Search
         </button>
       </SearchButtonWrapper>
-      {renderResults()}
+      {renderResults(results)}
     </MainPageLayout>
   );
 };

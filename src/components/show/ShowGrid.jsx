@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useCallback } from 'react';
 import ShowCard from './ShowCard';
 import IMAGE_NOT_FOUND from '../../images/not-found.png';
 import { FlexGrid } from '../styled';
@@ -13,13 +14,15 @@ const ShowGrid = ({ data }) => {
     <FlexGrid>
       {data.map(item => {
         const isStarred = starredShows.includes(item.show.id);
-        const onStarClick = () => {
+
+        // This has been put inside useCallback as if we were starring a movie we were having 10 renders or renders for all the cards on that page, so to render only the card being starred we use useCallback
+        const onStarClick = useCallback(() => {
           if (isStarred) {
             dispatchStarred({ type: 'REMOVE', showId: item.show.id });
           } else {
             dispatchStarred({ type: 'ADD', showId: item.show.id });
           }
-        };
+        }, [isStarred, item.show.id]);
         return (
           <ShowCard
             key={item.show.id}
