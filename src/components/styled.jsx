@@ -1,6 +1,8 @@
 import styled from 'styled-components';
+import FadeIn from 'react-fade-in';
 
-export const FlexGrid = styled.div`
+// We do styled(FadeIn) instead of styled.div to overwite styles and make our own flex
+export const FlexGrid = styled(FadeIn)`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
